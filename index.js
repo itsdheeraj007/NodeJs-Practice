@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken'
 import cookieParser  from 'cookie-parser';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 const app = express();
 
+dotenv.config();
 
 app.use(express.urlencoded({ extended:true }));
 // app.use(express.static(path.join(path.resolve(),'./public')));
@@ -13,9 +15,9 @@ app.use(express.urlencoded({ extended:true }));
 app.use(cookieParser());
 
 //connecting the Data base
-mongoose.connect("mongodb+srv://itsdheeraj00:9kk0bElVVZli0u91@backend.pmv2kdi.mongodb.net/", {
+mongoose.connect((process.env.MonogoUrl), {
     dbName:"backend",
-}).then(() => {console.log("database connection established")}).catch(err => console(err));
+}).then(() => {console.log("database connection established")}).catch(err => console.log(err));
 
 // creating schema for database
 const userSchema = new mongoose.Schema({
